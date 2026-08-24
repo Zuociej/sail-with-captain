@@ -1,24 +1,44 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { Contact } from "@/components/site/Contact";
+import { Footer } from "@/components/site/Footer";
+import { Hero } from "@/components/site/Hero";
+import { Navbar } from "@/components/site/Navbar";
+import { Trips } from "@/components/site/Trips";
+import { WhatIDo } from "@/components/site/WhatIDo";
+import { WhoIAm } from "@/components/site/WhoIAm";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Pożegluj sobie ze mną — babskie rejsy z kapitanką" },
+      {
+        name: "description",
+        content:
+          "Ekskluzywne babskie rejsy pod okiem doświadczonej kapitanki jachtowej: Grecja, Chorwacja i Mazury. Małe załogi, pełne wsparcie, zero rywalizacji.",
+      },
+      { property: "og:title", content: "Pożegluj sobie ze mną — babskie rejsy z kapitanką" },
+      {
+        property: "og:description",
+        content: "Babskie rejsy morskie i jeziorne: Grecja, Chorwacja, Mazury. Maksymalnie 8 kobiet na pokładzie.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div id="top">
+      <Navbar />
+      <main>
+        <Hero />
+        <WhoIAm />
+        <WhatIDo />
+        <Trips />
+        <Contact />
+      </main>
+      <Footer />
     </div>
   );
 }

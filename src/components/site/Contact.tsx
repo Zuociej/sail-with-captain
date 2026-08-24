@@ -97,17 +97,17 @@ export function Contact() {
           <div className="space-y-2">
             <Label htmlFor="c-name">Imię</Label>
             <Input id="c-name" name="name" maxLength={100} placeholder="Anna" />
-            {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
+            {errors["name"] && <p className="text-xs text-destructive">{errors["name"]}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="c-email">E-mail</Label>
             <Input id="c-email" name="email" type="email" maxLength={255} placeholder="anna@example.com" />
-            {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
+            {errors["email"] && <p className="text-xs text-destructive">{errors["email"]}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="c-message">Wiadomość</Label>
             <Textarea id="c-message" name="message" rows={6} maxLength={1000} placeholder="W czym mogę pomóc?" />
-            {errors.message && <p className="text-xs text-destructive">{errors.message}</p>}
+            {errors["message"] && <p className="text-xs text-destructive">{errors["message"]}</p>}
           </div>
           <Button type="submit" variant="navy" className="w-full">
             Wyślij wiadomość
