@@ -15,12 +15,12 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Ekskluzywne babskie rejsy pod okiem doświadczonej kapitanki jachtowej: Grecja, Chorwacja i Mazury. Małe załogi, pełne wsparcie, zero rywalizacji.",
+          "Ekskluzywne babskie rejsy pod okiem doświadczonej kapitanki jachtowej: Grecja, Chorwacja, Mazury, Jeziorak. Małe załogi, pełne wsparcie, zero rywalizacji.",
       },
       { property: "og:title", content: "Pożegluj sobie ze mną — babskie rejsy z kapitanką" },
       {
         property: "og:description",
-        content: "Babskie rejsy morskie i jeziorne: Grecja, Chorwacja, Mazury. Maksymalnie 8 kobiet na pokładzie.",
+        content: "Babskie rejsy morskie i jeziorne: Grecja, Chorwacja, Mazury, Jeziorak. Maksymalnie 8 kobiet na pokładzie.",
       },
     ],
   }),

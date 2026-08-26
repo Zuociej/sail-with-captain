@@ -34,7 +34,8 @@ export function WhoIAm() {
           <blockquote className="mt-9 flex gap-4 border-l-2 border-gold bg-secondary/60 p-6">
             <Quote className="h-5 w-5 shrink-0 text-gold" strokeWidth={1.5} />
             <p className="font-display text-xl italic leading-snug text-foreground">
-              Morze nie pyta, czy jesteś gotowa. Ale ja Cię do niego przygotuję.
+              Za dwadzieścia lat bardziej będziesz żałował tego, czego nie zrobiłeś, niż tego, co zrobiłeś. Więc odwiąż liny, opuść bezpieczną przystań. Złap wiatry w żagle. Podróżuj, śnij, odkrywaj.
+            – Mark Twain
             </p>
           </blockquote>
         </div>

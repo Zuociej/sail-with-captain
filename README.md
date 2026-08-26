@@ -58,16 +58,6 @@ Create a modern, responsive landing page (One-Page website) with a separate secu
 
 Structure the code cleanly, separating concerns into individual components (e.g., `Hero.tsx`, `TripCard.tsx`, `AdminDashboard.tsx`) so it is easy to export, open in Visual Studio Code (VSC), and connect to Hostido or Supabase later.
 
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/a1fcdace-b85e-4203-af20-720badb0564e).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
 ## Development
 
 Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
@@ -78,3 +68,45 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Hostido deployment
+
+Build the static site locally with `npm run build`, then upload everything inside
+`dist` to the domain's public directory on Hostido. The included `dist/.htaccess`
+keeps the `/admin` client route working after a browser refresh.
+
+The current frontend keeps editable content in browser `localStorage`. A PHP API
+must be added and configured on Hostido before the MySQL database is used in
+production; database credentials must remain on the server and never be placed
+in React or a public JavaScript file.
+
+### Hostido API setup
+
+The build includes a starter API in `dist/api`. In Hostido's File Manager:
+
+1. Copy `api/config.php.example` to `api/config.php`.
+2. Enter the Hostido MySQL credentials in `api/config.php`.
+3. Import the database schema through phpMyAdmin.
+4. Run `database/security.sql` in phpMyAdmin to add login rate limiting.
+5. Generate an admin password hash on a private machine:
+
+   ```sh
+   php -r "echo password_hash('REPLACE_WITH_A_NEW_PASSWORD', PASSWORD_DEFAULT), PHP_EOL;"
+   ```
+
+6. Insert the generated hash into `admin_users.password_hash`; never store the
+   plain password in SQL or JavaScript.
+7. Test `https://your-domain.example/api/health.php` and expect `{"ok":true}`.
+
+Available endpoints:
+
+- `GET /api/health.php` checks the database connection.
+- `GET /api/trips.php` returns active trips.
+- `POST /api/applications.php` saves a trip application and reserves a spot.
+- `POST /api/login.php` starts a secure PHP admin session.
+- `GET /api/me.php` verifies the current admin session.
+- `POST /api/logout.php` destroys the current admin session.
+- `GET /api/admin-trips.php` is protected and requires an admin session.
+
+Never commit or upload `config.php.example` as the live configuration. The real
+`config.php` is ignored by Git and must stay server-side.

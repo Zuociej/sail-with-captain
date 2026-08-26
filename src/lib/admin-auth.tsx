@@ -1,41 +1,49 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
-// Prototype-only mock credentials. Replace with real auth (Lovable Cloud)
-// before shipping anything sensitive.
-const MOCK_LOGIN = "admin";
-const MOCK_PASSWORD = "admin123";
-const SESSION_KEY = "psz-admin-session";
-
 type AdminAuthValue = {
   isAuthenticated: boolean;
-  login: (user: string, password: string) => boolean;
-  logout: () => void;
+  isLoading: boolean;
+  login: (user: string, password: string) => Promise<boolean>;
+  logout: () => Promise<void>;
 };
 
 const AdminAuthContext = createContext<AdminAuthValue | null>(null);
 
 export function AdminAuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setAuthenticated] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    setAuthenticated(window.sessionStorage.getItem(SESSION_KEY) === "1");
+    fetch("/api/me.php", { credentials: "same-origin" })
+      .then((response) => setAuthenticated(response.ok))
+      .catch(() => setAuthenticated(false))
+      .finally(() => setLoading(false));
   }, []);
 
-  const login = useCallback((user: string, password: string) => {
-    const ok = user.trim() === MOCK_LOGIN && password === MOCK_PASSWORD;
-    if (ok) {
-      window.sessionStorage.setItem(SESSION_KEY, "1");
-      setAuthenticated(true);
-    }
+  const login = useCallback(async (user: string, password: string) => {
+    const response = await fetch("/api/login.php", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: user, password }),
+    });
+    const ok = response.ok;
+    setAuthenticated(ok);
     return ok;
   }, []);
 
-  const logout = useCallback(() => {
-    window.sessionStorage.removeItem(SESSION_KEY);
+  const logout = useCallback(async () => {
+    await fetch("/api/logout.php", {
+      method: "POST",
+      credentials: "same-origin",
+    });
     setAuthenticated(false);
   }, []);
 
-  const value = useMemo(() => ({ isAuthenticated, login, logout }), [isAuthenticated, login, logout]);
+  const value = useMemo(
+    () => ({ isAuthenticated, isLoading, login, logout }),
+    [isAuthenticated, isLoading, login, logout],
+  );
 
   return <AdminAuthContext.Provider value={value}>{children}</AdminAuthContext.Provider>;
 }

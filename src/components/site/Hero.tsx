@@ -17,7 +17,9 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/25 to-navy/60" />
 
       <div className="relative mx-auto flex min-h-[100svh] max-w-4xl flex-col items-center justify-center px-6 text-center text-navy-foreground">
-        <span className="eyebrow">Babskie rejsy morskie · 2026</span>
+        <span className="eyebrow">
+  Babskie rejsy Grecja, Chorwacja, Mazury i Jeziorak · {new Date().getFullYear()}
+</span>
         <h1 className="mt-6 text-balance text-5xl leading-[1.05] sm:text-6xl lg:text-7xl">
           Złap wiatr razem
           <span className="block italic text-gold">z Kapitanką</span>
@@ -41,9 +43,9 @@ export function Hero() {
 
         <div className="mt-16 grid w-full max-w-2xl grid-cols-3 gap-4 border-t border-navy-foreground/15 pt-8 text-navy-foreground/80">
           {[
-            { icon: Waves, value: "30 000", label: "mil morskich" },
-            { icon: Compass, value: "15 lat", label: "za sterem" },
-            { icon: Ship, value: "400+", label: "żeglarek na pokładzie" },
+            { icon: Waves, value: "ILE", label: "mil morskich" },
+            { icon: Compass, value: "ILElat", label: "za sterem" },
+            { icon: Ship, value: "ILE", label: "żeglarek na pokładzie" },
           ].map(({ icon: Icon, value, label }) => (
             <div key={label} className="flex flex-col items-center gap-1">
               <Icon className="h-4 w-4 text-gold" strokeWidth={1.5} />

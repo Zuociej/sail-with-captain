@@ -10,11 +10,16 @@ export function AdminLogin() {
   const { login } = useAdminAuth();
   const [error, setError] = useState("");
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError("");
     const data = new FormData(e.currentTarget);
-    const ok = login(String(data.get("user") ?? ""), String(data.get("password") ?? ""));
-    if (!ok) setError("Niepoprawny login lub hasło.");
+    try {
+      const ok = await login(String(data.get("user") ?? ""), String(data.get("password") ?? ""));
+      if (!ok) setError("Niepoprawny login lub hasło.");
+    } catch {
+      setError("Nie można połączyć się z serwerem.");
+    }
   }
 
   return (
@@ -39,7 +44,6 @@ export function AdminLogin() {
         <Button type="submit" variant="navy" className="w-full">
           Zaloguj się
         </Button>
-        <p className="text-xs text-muted-foreground">Demo: admin / admin123</p>
       </form>
     </div>
   );

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
-import { Anchor, Lock, Menu, X } from "lucide-react";
+import { Anchor, Menu, X } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -59,12 +57,6 @@ export function Navbar() {
               {l.label}
             </a>
           ))}
-          <Button asChild variant={scrolled ? "outline" : "ghostLight"} size="sm">
-            <Link to="/admin">
-              <Lock className="h-3.5 w-3.5" />
-              Login
-            </Link>
-          </Button>
         </div>
 
         <button
@@ -93,12 +85,6 @@ export function Navbar() {
                 {l.label}
               </a>
             ))}
-            <Button asChild variant="outline" size="sm" className="mt-2 w-full">
-              <Link to="/admin" onClick={() => setOpen(false)}>
-                <Lock className="h-3.5 w-3.5" />
-                Login
-              </Link>
-            </Button>
           </div>
         </div>
       )}

@@ -18,6 +18,7 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminPage() {
-  const { isAuthenticated } = useAdminAuth();
+  const { isAuthenticated, isLoading } = useAdminAuth();
+  if (isLoading) return null;
   return isAuthenticated ? <AdminDashboard /> : <AdminLogin />;
 }
